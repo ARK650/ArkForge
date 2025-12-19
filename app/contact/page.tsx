@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Container, SectionWrapper, Input } from '@/components/ui';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -78,15 +78,9 @@ export default function ContactPage() {
       href: 'mailto:cark98@gmail.com',
     },
     {
-      icon: Phone,
-      title: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567',
-    },
-    {
       icon: MapPin,
       title: 'Location',
-      value: 'Ontario, Canada',
+      value: 'Toronto, Canada',
       href: null,
     },
   ];
