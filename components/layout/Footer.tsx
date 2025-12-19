@@ -77,14 +77,14 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li>
                   <a
-                    href="mailto:contact@arkforge.ca"
+                    href="mailto:cark98@gmail.com"
                     className="text-text-secondary hover:text-accent transition-colors duration-200 text-sm"
                   >
-                    contact@arkforge.ca
+                    cark98@gmail.com
                   </a>
                 </li>
                 <li className="text-text-secondary text-sm">
-                  [Your City], Ontario
+                  Ontario, Canada
                 </li>
               </ul>
             </div>

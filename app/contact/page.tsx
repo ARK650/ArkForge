@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Container, SectionWrapper, Button } from '@/components/ui';
 import { Input, Select, Textarea } from '@/components/ui/Input';
 
+// Contact email
+const CONTACT_EMAIL = 'cark98@gmail.com';
+
 // Product type options
 const productOptions = [
   { value: 'fidget-toys', label: 'Custom Fidget Toys' },
@@ -55,8 +58,6 @@ export default function ContactPage() {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -91,34 +92,47 @@ export default function ContactPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const getProductLabel = (value: string) => {
+    return productOptions.find(opt => opt.value === value)?.label || value;
+  };
+
+  const getQuantityLabel = (value: string) => {
+    return quantityOptions.find(opt => opt.value === value)?.label || value;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
+    // Compose email body
+    const subject = encodeURIComponent(`Quote Request: ${getProductLabel(formData.productType)} - ${formData.businessName}`);
+    const body = encodeURIComponent(
+`Hello ArkForge,
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+I would like to request a quote for your products.
 
-    // Log form data to console
-    console.log('Form submitted:', formData);
+--- CONTACT INFORMATION ---
+Name: ${formData.name}
+Business: ${formData.businessName}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+--- PROJECT DETAILS ---
+Product Type: ${getProductLabel(formData.productType)}
+Quantity: ${getQuantityLabel(formData.quantity)}
 
-    // Reset form after success
-    setFormData({
-      name: '',
-      businessName: '',
-      email: '',
-      phone: '',
-      productType: '',
-      quantity: '',
-      message: '',
-    });
+--- MESSAGE ---
+${formData.message}
+
+---
+Sent from ArkForge website contact form`
+    );
+
+    // Open email client
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (
@@ -133,48 +147,6 @@ export default function ContactPage() {
     }
   };
 
-  if (isSuccess) {
-    return (
-      <SectionWrapper>
-        <Container>
-          <div className="max-w-2xl mx-auto text-center py-16">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-accent/10 text-accent mb-6">
-              <svg
-                className="w-10 h-10"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-text-primary">
-              Message Sent!
-            </h1>
-            <p className="mt-4 text-lg text-text-secondary">
-              Thank you for reaching out. We&apos;ll review your request and get 
-              back to you within 24-48 hours.
-            </p>
-            <div className="mt-8">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => setIsSuccess(false)}
-              >
-                Send Another Message
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </SectionWrapper>
-    );
-  }
-
   return (
     <>
       {/* Hero Section */}
@@ -185,8 +157,14 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
-              Ready to create something great? Fill out the form below and we&apos;ll 
-              get back to you within 24-48 hours with a custom quote.
+              Ready to create something great? Fill out the form below to compose 
+              an email, or reach out directly at{' '}
+              <a 
+                href={`mailto:${CONTACT_EMAIL}`} 
+                className="text-accent hover:underline font-medium"
+              >
+                {CONTACT_EMAIL}
+              </a>
             </p>
           </div>
         </Container>
@@ -196,7 +174,33 @@ export default function ContactPage() {
       <SectionWrapper className="pt-0">
         <Container>
           <div className="max-w-2xl mx-auto">
+            {/* Direct Email Option */}
+            <div className="bg-accent/10 border border-accent/20 rounded-xl p-6 mb-8 text-center">
+              <h2 className="text-xl font-semibold text-text-primary mb-2">
+                Prefer to email directly?
+              </h2>
+              <p className="text-text-secondary mb-4">
+                Send us an email with your project details and we&apos;ll get back to you within 24-48 hours.
+              </p>
+              <a href={`mailto:${CONTACT_EMAIL}`}>
+                <Button variant="primary" size="lg">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Email {CONTACT_EMAIL}
+                </Button>
+              </a>
+            </div>
+
+            {/* Form */}
             <div className="bg-surface rounded-2xl border border-border p-6 md:p-8">
+              <h2 className="text-xl font-semibold text-text-primary mb-2">
+                Or use this form
+              </h2>
+              <p className="text-sm text-text-secondary mb-6">
+                Fill out the details below and click submit to open your email client with a pre-filled message.
+              </p>
+
               <form onSubmit={handleSubmit} noValidate>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
                   <Input
@@ -277,10 +281,15 @@ export default function ContactPage() {
                     variant="primary"
                     size="lg"
                     className="w-full"
-                    disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Open Email Client
                   </Button>
+                  <p className="text-xs text-text-secondary text-center mt-3">
+                    This will open your default email application with your message ready to send.
+                  </p>
                 </div>
               </form>
             </div>
@@ -292,17 +301,17 @@ export default function ContactPage() {
                   Email Us
                 </h3>
                 <a
-                  href="mailto:contact@arkforge.ca"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-accent hover:underline"
                 >
-                  contact@arkforge.ca
+                  {CONTACT_EMAIL}
                 </a>
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-text-primary mb-2">
                   Location
                 </h3>
-                <p className="text-text-secondary">[Your City], Ontario</p>
+                <p className="text-text-secondary">Ontario, Canada</p>
               </div>
             </div>
           </div>
