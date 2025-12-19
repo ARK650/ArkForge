@@ -1,53 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Container, SectionWrapper, Button } from '@/components/ui';
-import { Input, Select, Textarea } from '@/components/ui/Input';
-
-// Contact email
-const CONTACT_EMAIL = 'cark98@gmail.com';
-
-// Product type options
-const productOptions = [
-  { value: 'fidget-toys', label: 'Custom Fidget Toys' },
-  { value: 'retro-dock', label: 'Retro Radio Dock' },
-  { value: 'standby-dock', label: 'StandBy iPhone Dock' },
-  { value: 'coasters', label: 'Branded Coasters' },
-  { value: 'custom', label: 'Custom Project' },
-  { value: 'other', label: 'Other / Not Sure' },
-];
-
-// Quantity options
-const quantityOptions = [
-  { value: '10-25', label: '10-25 units' },
-  { value: '26-50', label: '26-50 units' },
-  { value: '51-100', label: '51-100 units' },
-  { value: '101-250', label: '101-250 units' },
-  { value: '251-500', label: '251-500 units' },
-  { value: '500+', label: '500+ units' },
-];
-
-interface FormData {
-  name: string;
-  businessName: string;
-  email: string;
-  phone: string;
-  productType: string;
-  quantity: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  businessName?: string;
-  email?: string;
-  productType?: string;
-  quantity?: string;
-  message?: string;
-}
+import { motion } from 'framer-motion';
+import { Container, SectionWrapper, Input } from '@/components/ui';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     name: '',
     businessName: '',
     email: '',
@@ -56,322 +15,329 @@ export default function ContactPage() {
     quantity: '',
     message: '',
   });
-
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.businessName.trim()) {
-      newErrors.businessName = 'Business name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.productType) {
-      newErrors.productType = 'Please select a product type';
-    }
-
-    if (!formData.quantity) {
-      newErrors.quantity = 'Please select a quantity range';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Please tell us about your project';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const getProductLabel = (value: string) => {
-    return productOptions.find(opt => opt.value === value)?.label || value;
-  };
-
-  const getQuantityLabel = (value: string) => {
-    return quantityOptions.find(opt => opt.value === value)?.label || value;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    // Compose email body
-    const subject = encodeURIComponent(`Quote Request: ${getProductLabel(formData.productType)} - ${formData.businessName}`);
-    const body = encodeURIComponent(
-`Hello ArkForge,
-
-I would like to request a quote for your products.
-
---- CONTACT INFORMATION ---
-Name: ${formData.name}
-Business: ${formData.businessName}
-Email: ${formData.email}
-Phone: ${formData.phone || 'Not provided'}
-
---- PROJECT DETAILS ---
-Product Type: ${getProductLabel(formData.productType)}
-Quantity: ${getQuantityLabel(formData.quantity)}
-
---- MESSAGE ---
-${formData.message}
-
----
-Sent from ArkForge website contact form`
-    );
-
-    // Open email client
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://formspree.io/f/maqwqbej', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          businessName: formData.businessName,
+          email: formData.email,
+          phone: formData.phone,
+          productType: formData.productType,
+          quantity: formData.quantity,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          name: '',
+          businessName: '',
+          email: '',
+          phone: '',
+          productType: '',
+          quantity: '',
+          message: '',
+        });
+      } else {
+        const data = await response.json();
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: 'Email',
+      value: 'cark98@gmail.com',
+      href: 'mailto:cark98@gmail.com',
+    },
+    {
+      icon: Phone,
+      title: 'Phone',
+      value: '+1 (555) 123-4567',
+      href: 'tel:+15551234567',
+    },
+    {
+      icon: MapPin,
+      title: 'Location',
+      value: 'Ontario, Canada',
+      href: null,
+    },
+  ];
+
   return (
-    <>
+    <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <SectionWrapper>
+      <SectionWrapper className="py-16 md:py-24">
         <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-text-primary">
-              Get in Touch
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6">
+              Let&apos;s <span className="text-accent">Build</span> Together
             </h1>
-            <p className="mt-4 text-lg text-text-secondary">
-              Ready to create something great? Fill out the form below to compose 
-              an email, or reach out directly at{' '}
-              <a 
-                href={`mailto:${CONTACT_EMAIL}`} 
-                className="text-accent hover:underline font-medium"
-              >
-                {CONTACT_EMAIL}
-              </a>
+            <p className="text-lg md:text-xl text-text-secondary">
+              Ready to elevate your brand with custom products? Get in touch and
+              let&apos;s discuss your vision. We typically respond within 24 hours.
             </p>
-          </div>
+          </motion.div>
         </Container>
       </SectionWrapper>
 
-      {/* Contact Form */}
-      <SectionWrapper className="pt-0">
+      {/* Contact Form & Info */}
+      <SectionWrapper className="py-16">
         <Container>
-          <div className="max-w-2xl mx-auto">
-            {/* Direct Email Option */}
-            <div className="bg-accent/10 border border-accent/20 rounded-xl p-6 mb-8 text-center">
-              <h2 className="text-xl font-semibold text-text-primary mb-2">
-                Prefer to email directly?
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="lg:col-span-1"
+            >
+              <h2 className="text-2xl font-bold text-text-primary mb-6">
+                Contact Information
               </h2>
-              <p className="text-text-secondary mb-4">
-                Send us an email with your project details and we&apos;ll get back to you within 24-48 hours.
-              </p>
-              <a href={`mailto:${CONTACT_EMAIL}`}>
-                <Button variant="primary" size="lg">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Email {CONTACT_EMAIL}
-                </Button>
-              </a>
-            </div>
+              <div className="space-y-6">
+                {contactInfo.map((item, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-text-primary">
+                        {item.title}
+                      </h3>
+                      {item.href ? (
+                        <a
+                          href={item.href}
+                          className="text-text-secondary hover:text-accent transition-colors"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-text-secondary">{item.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-            {/* Form */}
-            <div className="bg-surface rounded-2xl border border-border p-6 md:p-8">
-              <h2 className="text-xl font-semibold text-text-primary mb-2">
-                Or use this form
-              </h2>
-              <p className="text-sm text-text-secondary mb-6">
-                Fill out the details below and click submit to open your email client with a pre-filled message.
-              </p>
-
-              <form onSubmit={handleSubmit} noValidate>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                  <Input
-                    label="Name *"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    error={errors.name}
-                    placeholder="Your name"
-                    autoComplete="name"
-                  />
-
-                  <Input
-                    label="Business Name *"
-                    name="businessName"
-                    type="text"
-                    value={formData.businessName}
-                    onChange={handleChange}
-                    error={errors.businessName}
-                    placeholder="Your company"
-                    autoComplete="organization"
-                  />
-
-                  <Input
-                    label="Email *"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    error={errors.email}
-                    placeholder="you@company.com"
-                    autoComplete="email"
-                  />
-
-                  <Input
-                    label="Phone (Optional)"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="(555) 123-4567"
-                    autoComplete="tel"
-                  />
-
-                  <Select
-                    label="Product Type *"
-                    name="productType"
-                    value={formData.productType}
-                    onChange={handleChange}
-                    error={errors.productType}
-                    options={productOptions}
-                  />
-
-                  <Select
-                    label="Quantity Range *"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    error={errors.quantity}
-                    options={quantityOptions}
-                  />
+              <div className="mt-12 p-6 bg-surface rounded-xl border border-border">
+                <h3 className="font-semibold text-text-primary mb-3">
+                  Business Hours
+                </h3>
+                <div className="space-y-2 text-text-secondary">
+                  <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
+                  <p>Saturday: 10:00 AM - 4:00 PM EST</p>
+                  <p>Sunday: Closed</p>
                 </div>
+              </div>
+            </motion.div>
 
-                <Textarea
-                  label="Tell Us About Your Project *"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  error={errors.message}
-                  placeholder="Describe your project, branding requirements, timeline, and any other details..."
-                  rows={5}
-                />
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="lg:col-span-2"
+            >
+              <div className="bg-surface rounded-2xl border border-border p-8">
+                <h2 className="text-2xl font-bold text-text-primary mb-6">
+                  Request a Quote
+                </h2>
 
-                <div className="mt-6">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    className="w-full"
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-12"
                   >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    Open Email Client
-                  </Button>
-                  <p className="text-xs text-text-secondary text-center mt-3">
-                    This will open your default email application with your message ready to send.
-                  </p>
-                </div>
-              </form>
-            </div>
+                    <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle className="w-10 h-10 text-green-500" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-text-primary mb-4">
+                      Thank You!
+                    </h3>
+                    <p className="text-text-secondary mb-6">
+                      Your message has been sent successfully. We&apos;ll get back to
+                      you within 24 hours.
+                    </p>
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="text-accent hover:text-accent/80 transition-colors"
+                    >
+                      Send another message
+                    </button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {error && (
+                      <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400">
+                        {error}
+                      </div>
+                    )}
 
-            {/* Additional Contact Info */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
-              <div>
-                <h3 className="text-lg font-semibold text-text-primary mb-2">
-                  Email Us
-                </h3>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="text-accent hover:underline"
-                >
-                  {CONTACT_EMAIL}
-                </a>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <Input
+                        label="Your Name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="John Smith"
+                      />
+                      <Input
+                        label="Business Name"
+                        name="businessName"
+                        value={formData.businessName}
+                        onChange={handleChange}
+                        required
+                        placeholder="Acme Corp"
+                      />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <Input
+                        label="Email Address"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="john@acmecorp.com"
+                      />
+                      <Input
+                        label="Phone Number"
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="+1 (555) 123-4567"
+                      />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-text-primary mb-2">
+                          Product Type
+                        </label>
+                        <select
+                          name="productType"
+                          value={formData.productType}
+                          onChange={handleChange}
+                          required
+                          className="w-full px-4 py-3 bg-background border border-border rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                        >
+                          <option value="">Select a product</option>
+                          <option value="fidget-toys">Custom Fidget Toys</option>
+                          <option value="phone-docks">Branded Phone Docks</option>
+                          <option value="coasters">Premium Coasters</option>
+                          <option value="multiple">Multiple Products</option>
+                          <option value="other">Other / Custom Request</option>
+                        </select>
+                      </div>
+                      <Input
+                        label="Estimated Quantity"
+                        name="quantity"
+                        value={formData.quantity}
+                        onChange={handleChange}
+                        placeholder="e.g., 500 units"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-text-primary mb-2">
+                        Project Details
+                      </label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={5}
+                        placeholder="Tell us about your project, timeline, and any specific requirements..."
+                        className="w-full px-4 py-3 bg-background border border-border rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          Send Message
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-text-primary mb-2">
-                  Location
-                </h3>
-                <p className="text-text-secondary">Ontario, Canada</p>
-              </div>
-            </div>
+            </motion.div>
           </div>
         </Container>
       </SectionWrapper>
 
-      {/* FAQ Section */}
-      <SectionWrapper className="bg-surface/50">
+      {/* Map Placeholder */}
+      <SectionWrapper className="py-16 bg-surface">
         <Container>
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-8">
-              Frequently Asked Questions
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-4">
+              Serving Businesses Across North America
             </h2>
-
-            <div className="space-y-6">
-              <div className="bg-background rounded-xl border border-border p-6">
-                <h3 className="font-semibold text-text-primary">
-                  What&apos;s the minimum order quantity?
-                </h3>
-                <p className="mt-2 text-text-secondary">
-                  Our minimum order is typically 10 units, depending on the product. 
-                  We&apos;re set up for small-batch production, making us ideal for 
-                  businesses that don&apos;t need thousands of units.
-                </p>
-              </div>
-
-              <div className="bg-background rounded-xl border border-border p-6">
-                <h3 className="font-semibold text-text-primary">
-                  How long does production take?
-                </h3>
-                <p className="mt-2 text-text-secondary">
-                  Standard turnaround is 2-3 weeks from design approval. Rush orders 
-                  are available for an additional fee.
-                </p>
-              </div>
-
-              <div className="bg-background rounded-xl border border-border p-6">
-                <h3 className="font-semibold text-text-primary">
-                  Can you match my brand colors?
-                </h3>
-                <p className="mt-2 text-text-secondary">
-                  Yes! Our multi-color production capabilities allow us to match 
-                  your brand colors accurately. Just provide your brand guidelines 
-                  or Pantone colors.
-                </p>
-              </div>
-
-              <div className="bg-background rounded-xl border border-border p-6">
-                <h3 className="font-semibold text-text-primary">
-                  Do you ship outside Ontario?
-                </h3>
-                <p className="mt-2 text-text-secondary">
-                  We ship across Canada. Shipping costs are calculated based on 
-                  order size and destination.
-                </p>
-              </div>
-            </div>
-          </div>
+            <p className="text-text-secondary max-w-2xl mx-auto">
+              Based in Ontario, Canada, we ship our custom products to businesses
+              throughout the United States and Canada. International shipping
+              available upon request.
+            </p>
+          </motion.div>
         </Container>
       </SectionWrapper>
-    </>
+    </div>
   );
 }
