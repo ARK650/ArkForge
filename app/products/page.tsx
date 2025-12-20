@@ -156,10 +156,9 @@ export default function ProductsPage() {
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {productTiers.map((tier) => (
+              <div key={tier.id} id={tier.id} className="scroll-mt-24">
               <Card
-                key={tier.id}
-                id={tier.id}
-                className={`flex flex-col relative scroll-mt-24 ${tier.featured ? 'ring-2 ring-accent' : ''}`}
+                className={`flex flex-col relative h-full ${tier.featured ? 'ring-2 ring-accent' : ''}`}
                 hover={true}
               >
                 {/* Badge */}
@@ -223,6 +222,7 @@ export default function ProductsPage() {
                   </Link>
                 </div>
               </Card>
+              </div>
             ))}
           </div>
         </Container>
