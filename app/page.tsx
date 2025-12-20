@@ -38,19 +38,19 @@ const productTiers = [
   {
     title: 'Budget Series',
     description: 'Simple shapes, 1-2 colors. Starting at $4.75/unit.',
-    image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&h=600&fit=crop',
+    image: '/ArkForge/images/budget-series.jpg',
     badge: 'From 50 units',
   },
   {
     title: 'Brand Series',
     description: 'Custom logo, up to 4 colors. Starting at $7.50/unit.',
-    image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=600&fit=crop',
+    image: '/ArkForge/images/brand-series.jpg',
     badge: 'Most Popular',
   },
   {
     title: 'Premium Series',
     description: 'Fully custom 3D shapes. Starting at $10.50/unit.',
-    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=600&fit=crop',
+    image: '/ArkForge/images/premium-series.jpg',
     badge: 'Maximum Impact',
   },
 ];
