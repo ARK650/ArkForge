@@ -24,8 +24,7 @@ const productTiers = [
       'Logo printed/engraved on flat surface',
     ],
     products: [
-      { name: 'Simple Fidget Keychain', price: '$4.75/unit', min: '50 units min' },
-      { name: 'Basic Clicky Keychain', price: '$4.75/unit', min: '50 units min' },
+      { name: 'Clicky Keychain', price: '$4.75/unit*' },
     ],
     volumePricing: [
       { range: '50-249 units', price: '$6.50/unit' },
@@ -50,8 +49,7 @@ const productTiers = [
       'Their logo IS the design',
     ],
     products: [
-      { name: 'Custom Shape Fidget Toy', price: '$7.50/unit', min: '50 units min' },
-      { name: 'Logo-Integrated Clicky Toy', price: '$7.50/unit', min: '50 units min' },
+      { name: 'Clicky Keychain', price: '$7.50/unit*' },
     ],
     volumePricing: [
       { range: '50-249 units', price: '$10.00/unit' },
@@ -77,8 +75,7 @@ const productTiers = [
       'Premium packaging option available',
     ],
     products: [
-      { name: 'Custom Mascot Fidget Toy', price: '$10.50/unit', min: '50 units min' },
-      { name: 'Multi-Function Fidget Device', price: '$10.50/unit', min: '50 units min' },
+      { name: 'Clicky Keychain', price: '$10.50/unit*' },
     ],
     volumePricing: [
       { range: '50-249 units', price: '$15.00/unit' },
@@ -189,17 +186,13 @@ export default function ProductsPage() {
                     {tier.description}
                   </p>
 
-                  {/* Products in tier */}
-                  <div className="space-y-3 mb-6">
-                    {tier.products.map((product, idx) => (
-                      <div key={idx} className="flex justify-between items-center p-3 bg-background rounded-lg">
-                        <div>
-                          <p className="text-text-primary font-medium text-sm">{product.name}</p>
-                          <p className="text-text-secondary text-xs">{product.min}</p>
-                        </div>
-                        <p className="text-accent font-semibold">{product.price}</p>
-                      </div>
-                    ))}
+                  {/* Product Price */}
+                  <div className="mb-6">
+                    <div className="p-4 bg-background rounded-lg text-center">
+                      <p className="text-text-secondary text-xs mb-1">Starting at</p>
+                      <p className="text-accent font-bold text-2xl">{tier.products[0].price}</p>
+                      <p className="text-text-secondary text-xs mt-2">50 units minimum</p>
+                    </div>
                   </div>
 
                   {/* Features */}
@@ -225,6 +218,11 @@ export default function ProductsPage() {
               </div>
             ))}
           </div>
+          
+          {/* Asterisk note */}
+          <p className="text-center text-text-secondary text-sm mt-6">
+            *Prices shown are for bulk orders (1000+ units). See volume pricing below for all quantity tiers.
+          </p>
         </Container>
       </SectionWrapper>
 

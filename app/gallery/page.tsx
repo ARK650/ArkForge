@@ -6,78 +6,78 @@ import { Container, SectionWrapper, Button, Card } from '@/components/ui';
 export const metadata: Metadata = {
   title: 'Gallery | ArkForge Custom',
   description:
-    'Browse our gallery of custom branded products: fidget toys, phone docks, coasters, and more.',
+    'Browse our gallery of custom branded clicky keychains. See examples of Budget, Brand, and Premium series designs.',
 };
 
 // Gallery items data with images
 const galleryItems = [
   {
     id: 1,
-    title: 'Custom Fidget Toy',
-    caption: 'Mechanical switches with company branding',
-    category: 'Fidget Toys',
+    title: 'Budget Series - Circle',
+    caption: 'Simple geometric shape with 2-color branding',
+    category: 'Budget Series',
     image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&h=600&fit=crop',
   },
   {
     id: 2,
-    title: 'Retro Radio Dock',
-    caption: 'Nostalgic design for a tech startup',
-    category: 'Phone Docks',
-    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&h=600&fit=crop',
+    title: 'Budget Series - Hexagon',
+    caption: 'Clean hexagon design with logo engraving',
+    category: 'Budget Series',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop',
   },
   {
     id: 3,
-    title: 'Branded Coaster Set',
-    caption: 'Premium coasters for a local brewery',
-    category: 'Coasters',
-    image: 'https://images.unsplash.com/photo-1611791484670-ce19b801d192?w=600&h=600&fit=crop',
+    title: 'Budget Series - Square',
+    caption: 'Compact square with single color logo',
+    category: 'Budget Series',
+    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=600&fit=crop',
   },
   {
     id: 4,
-    title: 'StandBy Dock',
-    caption: 'Minimalist dock for a design agency',
-    category: 'Phone Docks',
+    title: 'Brand Series - Wrench',
+    caption: 'Custom wrench shape for auto shop',
+    category: 'Brand Series',
     image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=600&fit=crop',
   },
   {
     id: 5,
-    title: 'Event Giveaway Fidgets',
-    caption: 'Conference promotional items',
-    category: 'Fidget Toys',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop',
-  },
-  {
-    id: 6,
-    title: 'Custom Logo Coasters',
-    caption: 'Multi-color branded coasters',
-    category: 'Coasters',
+    title: 'Brand Series - House',
+    caption: 'Real estate agency branded keychain',
+    category: 'Brand Series',
     image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?w=600&h=600&fit=crop',
   },
   {
-    id: 7,
-    title: 'Corporate Gift Set',
-    caption: 'Mixed product gift box',
-    category: 'Custom Projects',
-    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=600&fit=crop',
+    id: 6,
+    title: 'Brand Series - Coffee Cup',
+    caption: 'Café promotional keychain with 4-color logo',
+    category: 'Brand Series',
+    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&h=600&fit=crop',
   },
   {
-    id: 8,
-    title: 'Trade Show Display',
-    caption: 'Interactive product samples',
-    category: 'Custom Projects',
+    id: 7,
+    title: 'Premium Series - Mascot',
+    caption: 'Fully custom 3D mascot design',
+    category: 'Premium Series',
     image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=600&fit=crop',
   },
   {
-    id: 9,
-    title: 'Dual Device Dock',
-    caption: 'iPhone and Apple Watch charging station',
-    category: 'Phone Docks',
+    id: 8,
+    title: 'Premium Series - Multi-Function',
+    caption: 'Multiple fidget mechanisms in one design',
+    category: 'Premium Series',
     image: 'https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=600&h=600&fit=crop',
+  },
+  {
+    id: 9,
+    title: 'Premium Series - Logo Sculpture',
+    caption: 'Company logo as the entire keychain shape',
+    category: 'Premium Series',
+    image: 'https://images.unsplash.com/photo-1611791484670-ce19b801d192?w=600&h=600&fit=crop',
   },
 ];
 
 // Filter categories
-const categories = ['All', 'Fidget Toys', 'Phone Docks', 'Coasters', 'Custom Projects'];
+const categories = ['All', 'Budget Series', 'Brand Series', 'Premium Series'];
 
 export default function GalleryPage() {
   return (
@@ -90,8 +90,8 @@ export default function GalleryPage() {
               Our Gallery
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
-              Browse examples of our work. Each product is custom manufactured 
-              with precision and care.
+              Browse examples of our clicky keychains across all three tiers. 
+              Each design is fully customizable with your branding.
             </p>
           </div>
         </Container>
