@@ -95,6 +95,30 @@ export default function HomePage() {
         />
       </SectionWrapper>
 
+      {/* Stats Pill Section */}
+      <SectionWrapper className="py-8">
+        <Container>
+          <div className="flex justify-center">
+            <div className="inline-flex flex-wrap justify-center items-center gap-4 md:gap-8 px-8 py-4 bg-surface rounded-full border border-border shadow-lg">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl md:text-3xl font-bold text-accent">10+</span>
+                <span className="text-sm text-text-secondary">Unique Materials</span>
+              </div>
+              <div className="hidden md:block w-px h-8 bg-border" />
+              <div className="flex items-center gap-2">
+                <span className="text-2xl md:text-3xl font-bold text-accent">100+</span>
+                <span className="text-sm text-text-secondary">Customers</span>
+              </div>
+              <div className="hidden md:block w-px h-8 bg-border" />
+              <div className="flex items-center gap-2">
+                <span className="text-2xl md:text-3xl font-bold text-accent">180+</span>
+                <span className="text-sm text-text-secondary">Keychains Manufactured</span>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </SectionWrapper>
+
       {/* Features Section */}
       <SectionWrapper className="bg-surface/50">
         <Container>
