@@ -337,7 +337,7 @@ export default function ProductsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {steps.map((step, index) => (
-              <div key={step.number} className="relative">
+              <div key={step.number} className="relative h-full">
                 {/* Connector line (hidden on mobile, shown on larger screens) */}
                 {index < steps.length - 1 && (
                   <div
@@ -346,14 +346,14 @@ export default function ProductsPage() {
                   />
                 )}
 
-                <div className="relative bg-surface rounded-xl p-6 border border-border text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-accent font-bold text-xl mb-4">
+                <div className="relative bg-surface rounded-xl p-6 border border-border text-center h-full flex flex-col">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-accent font-bold text-xl mb-4 mx-auto">
                     {step.number}
                   </div>
                   <h3 className="text-lg font-semibold text-text-primary mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-text-secondary">{step.description}</p>
+                  <p className="text-sm text-text-secondary flex-grow">{step.description}</p>
                 </div>
               </div>
             ))}
