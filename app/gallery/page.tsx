@@ -104,38 +104,35 @@ export default function GalleryPage() {
             </div>
           </div>
 
-          {/* Gallery List */}
-          <div className="space-y-4">
-            {galleryItems.map((item, index) => (
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {galleryItems.map((item) => (
               <div 
                 key={item.id} 
-                className="group flex items-center bg-surface rounded-2xl border border-border overflow-hidden hover:border-border/80 hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
+                className={`group relative bg-surface rounded-2xl overflow-hidden border-2 ${item.tierColor.replace('bg-', 'border-')} hover:shadow-xl hover:shadow-black/30 transition-all duration-300`}
               >
-                {/* Image on left */}
-                <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 relative flex-shrink-0 overflow-hidden">
+                {/* Large Image */}
+                <div className="aspect-square relative overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.caption}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="176px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  {/* Subtle gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/20" />
-                </div>
+                  {/* Bottom gradient for text readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" />
+                  
+                  {/* Text overlay at bottom */}
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="text-white text-sm md:text-base font-medium drop-shadow-lg">
+                      {item.caption}
+                    </p>
+                  </div>
 
-                {/* Description in center */}
-                <div className="flex-grow px-5 py-4 md:px-8 md:py-6">
-                  <p className="text-text-primary text-sm md:text-base lg:text-lg font-medium leading-relaxed">
-                    {item.caption}
-                  </p>
-                  <p className="text-text-secondary text-xs md:text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Click to learn more →
-                  </p>
+                  {/* Color indicator dot */}
+                  <div className={`absolute top-3 right-3 w-3 h-3 rounded-full ${item.tierColor} ring-2 ring-white/50`} />
                 </div>
-
-                {/* Color accent stripe on right */}
-                <div className={`w-1.5 md:w-2 self-stretch ${item.tierColor} group-hover:w-3 transition-all duration-300`} />
               </div>
             ))}
           </div>
