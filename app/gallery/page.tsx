@@ -17,6 +17,7 @@ const galleryItems = [
     caption: 'Simple geometric shape with 2-color branding',
     category: 'Budget Series',
     image: '/ArkForge/images/gal-budget.jpg',
+    tierColor: 'border-l-blue-500',
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const galleryItems = [
     caption: 'Clean design with logo engraving',
     category: 'Budget Series',
     image: '/ArkForge/images/gal-budget-1.jpg',
+    tierColor: 'border-l-blue-500',
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const galleryItems = [
     caption: 'Compact design with single color logo',
     category: 'Budget Series',
     image: '/ArkForge/images/gal-budget-2.jpg',
+    tierColor: 'border-l-blue-500',
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ const galleryItems = [
     caption: 'Custom shape with full color branding',
     category: 'Brand Series',
     image: '/ArkForge/images/gal-brand.jpg',
+    tierColor: 'border-l-accent',
   },
   {
     id: 5,
@@ -45,6 +49,7 @@ const galleryItems = [
     caption: 'Logo-integrated premium design',
     category: 'Brand Series',
     image: '/ArkForge/images/gal-brand-1.jpg',
+    tierColor: 'border-l-accent',
   },
   {
     id: 6,
@@ -52,6 +57,7 @@ const galleryItems = [
     caption: 'Multi-color branded keychain',
     category: 'Brand Series',
     image: '/ArkForge/images/gal-brand-2.jpg',
+    tierColor: 'border-l-accent',
   },
   {
     id: 7,
@@ -59,6 +65,7 @@ const galleryItems = [
     caption: 'Fully custom 3D design',
     category: 'Premium Series',
     image: '/ArkForge/images/gal-premium.jpg',
+    tierColor: 'border-l-purple-500',
   },
   {
     id: 8,
@@ -66,6 +73,7 @@ const galleryItems = [
     caption: 'Multiple fidget mechanisms',
     category: 'Premium Series',
     image: '/ArkForge/images/gal-premium-1.jpg',
+    tierColor: 'border-l-purple-500',
   },
   {
     id: 9,
@@ -73,11 +81,9 @@ const galleryItems = [
     caption: 'Complex multi-feature design',
     category: 'Premium Series',
     image: '/ArkForge/images/gal-premium-2.jpg',
+    tierColor: 'border-l-purple-500',
   },
 ];
-
-// Filter categories
-const categories = ['All', 'Budget Series', 'Brand Series', 'Premium Series'];
 
 export default function GalleryPage() {
   return (
@@ -100,61 +106,45 @@ export default function GalleryPage() {
       {/* Gallery Grid */}
       <SectionWrapper className="pt-0">
         <Container>
-          {/* Category Filter (visual only for now) */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                  category === 'All'
-                    ? 'bg-accent text-white'
-                    : 'bg-surface text-text-secondary hover:text-text-primary border border-border'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+          {/* Color Legend */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-blue-500" />
+              <span className="text-sm text-text-secondary">Budget Series</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-accent" />
+              <span className="text-sm text-text-secondary">Brand Series</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-purple-500" />
+              <span className="text-sm text-text-secondary">Premium Series</span>
+            </div>
           </div>
 
           {/* Image Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {galleryItems.map((item) => (
-              <Card key={item.id} className="group overflow-hidden">
+              <Card key={item.id} className={`overflow-hidden border-l-4 ${item.tierColor}`}>
                 {/* Gallery Image */}
                 <div className="aspect-square bg-background relative overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <span className="text-xs uppercase tracking-wider text-accent font-medium">
-                        {item.category}
-                      </span>
-                      <h3 className="text-lg font-semibold text-text-primary mt-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-text-secondary mt-1">
-                        {item.caption}
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
-                {/* Caption (visible on mobile) */}
-                <div className="p-4 sm:hidden">
-                  <span className="text-xs uppercase tracking-wider text-accent font-medium">
-                    {item.category}
-                  </span>
-                  <h3 className="text-lg font-semibold text-text-primary mt-1">
+                {/* Caption always visible */}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-text-primary">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-text-secondary">{item.caption}</p>
+                  <p className="text-sm text-text-secondary mt-1">
+                    {item.caption}
+                  </p>
                 </div>
               </Card>
             ))}
