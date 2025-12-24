@@ -92,7 +92,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="aspect-square relative rounded-2xl overflow-hidden border border-border shadow-2xl">
                   <Image
-                    src="/ArkForge/images/hero-1.png"
+                    src="/ArkForge/images/hero.jpg"
                     alt="Custom Clicky Keychain"
                     fill
                     className="object-cover"
