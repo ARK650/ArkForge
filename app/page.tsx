@@ -62,27 +62,46 @@ export default function HomePage() {
       <SectionWrapper className="relative overflow-hidden">
         <Container>
           <div className="py-12 md:py-20 lg:py-28">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight text-balance">
-                Custom Clicky Keychains That{' '}
-                <span className="text-accent">People Actually Keep</span>
-              </h1>
-              <p className="mt-6 text-lg md:text-xl text-text-secondary leading-relaxed max-w-2xl">
-                Branded fidget keychains with satisfying mechanical switches. 
-                Three pricing tiers to fit any budget, with minimums starting 
-                at just 50 units. Made locally in Toronto.
-              </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link href="/contact">
-                  <Button variant="primary" size="lg">
-                    Request a Quote
-                  </Button>
-                </Link>
-                <Link href="/gallery">
-                  <Button variant="outline" size="lg">
-                    View Gallery
-                  </Button>
-                </Link>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Hero Text */}
+              <div className="max-w-xl">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary leading-tight text-balance">
+                  Custom Clicky Keychains That{' '}
+                  <span className="text-accent">People Actually Keep</span>
+                </h1>
+                <p className="mt-6 text-lg md:text-xl text-text-secondary leading-relaxed">
+                  Branded fidget keychains with satisfying mechanical switches. 
+                  Three pricing tiers to fit any budget, with minimums starting 
+                  at just 50 units. Made locally in Toronto.
+                </p>
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  <Link href="/contact">
+                    <Button variant="primary" size="lg">
+                      Request a Quote
+                    </Button>
+                  </Link>
+                  <Link href="/gallery">
+                    <Button variant="outline" size="lg">
+                      View Gallery
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Hero Image */}
+              <div className="relative">
+                <div className="aspect-square relative rounded-2xl overflow-hidden border border-border shadow-2xl">
+                  <Image
+                    src="/ArkForge/images/hero-1.png"
+                    alt="Custom Clicky Keychain"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+                {/* Decorative glow behind image */}
+                <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full -z-10" />
               </div>
             </div>
           </div>
