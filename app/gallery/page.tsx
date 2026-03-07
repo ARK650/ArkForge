@@ -16,54 +16,63 @@ const galleryItems = [
     caption: 'Simple geometric shape with 2-color branding',
     image: '/ArkForge/images/gal-budget.jpg',
     tierColor: 'bg-blue-500',
+    borderColor: 'border-blue-500',
   },
   {
     id: 2,
     caption: 'Clean design with logo engraving',
     image: '/ArkForge/images/gal-budget-1.jpg',
     tierColor: 'bg-blue-500',
+    borderColor: 'border-blue-500',
   },
   {
     id: 3,
     caption: 'Compact design with single color logo',
     image: '/ArkForge/images/gal-budget-2.jpg',
     tierColor: 'bg-blue-500',
+    borderColor: 'border-blue-500',
   },
   {
     id: 4,
     caption: 'Custom shape with full color branding',
     image: '/ArkForge/images/gal-brand.jpg',
     tierColor: 'bg-accent',
+    borderColor: 'border-accent',
   },
   {
     id: 5,
     caption: 'Logo-integrated premium design',
     image: '/ArkForge/images/gal-brand-1.jpg',
     tierColor: 'bg-accent',
+    borderColor: 'border-accent',
   },
   {
     id: 6,
     caption: 'Multi-color branded keychain',
     image: '/ArkForge/images/gal-brand-2.jpg',
     tierColor: 'bg-accent',
+    borderColor: 'border-accent',
   },
   {
     id: 7,
     caption: 'Fully custom 3D design',
     image: '/ArkForge/images/gal-premium.jpg',
     tierColor: 'bg-purple-500',
+    borderColor: 'border-purple-500',
   },
   {
     id: 8,
     caption: 'Multiple fidget mechanisms',
     image: '/ArkForge/images/gal-premium-1.jpg',
     tierColor: 'bg-purple-500',
+    borderColor: 'border-purple-500',
   },
   {
     id: 9,
     caption: 'Complex multi-feature design',
     image: '/ArkForge/images/gal-premium-2.jpg',
     tierColor: 'bg-purple-500',
+    borderColor: 'border-purple-500',
   },
 ];
 
@@ -110,7 +119,7 @@ export default function GalleryPage() {
             {galleryItems.map((item) => (
               <div 
                 key={item.id} 
-                className={`group relative bg-surface rounded-2xl overflow-hidden border-2 ${item.tierColor.replace('bg-', 'border-')} hover:shadow-xl hover:shadow-black/30 transition-all duration-300`}
+                className={`group relative bg-surface rounded-2xl overflow-hidden border-2 ${item.borderColor} hover:shadow-xl hover:shadow-black/30 transition-all duration-300`}
               >
                 {/* Large Image */}
                 <div className="aspect-square relative overflow-hidden">
