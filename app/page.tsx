@@ -5,6 +5,15 @@ import { Container, SectionWrapper, Button, Card } from '@/components/ui';
 // Feature cards data
 const features = [
   {
+    title: 'NFC-Enabled Standard',
+    description: 'Every keychain comes with an embedded NFC tag at no extra cost. Link to websites, menus, portfolios, booking pages, and more.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" />
+      </svg>
+    ),
+  },
+  {
     title: 'Low Minimums',
     description: 'Start with as few as 50 units. Perfect for small businesses testing the waters.',
     icon: (
@@ -37,19 +46,19 @@ const features = [
 const productTiers = [
   {
     title: 'Budget Series',
-    description: 'Simple shapes, 1-2 colors. Starting at $4.75/unit.',
+    description: 'Simple shapes, 1-2 colors + NFC tag. Starting at $4.75/unit.',
     image: '/ArkForge/images/budget-series.jpg',
     badge: 'From 50 units',
   },
   {
     title: 'Brand Series',
-    description: 'Custom logo, up to 4 colors. Starting at $7.50/unit.',
+    description: 'Custom logo, up to 4 colors + NFC tag. Starting at $7.50/unit.',
     image: '/ArkForge/images/brand-series.jpg',
     badge: 'Most Popular',
   },
   {
     title: 'Premium Series',
-    description: 'Fully custom 3D shapes. Starting at $10.50/unit.',
+    description: 'Fully custom 3D shapes + NFC tag. Starting at $10.50/unit.',
     image: '/ArkForge/images/premium-series.jpg',
     badge: 'Maximum Impact',
   },
@@ -70,9 +79,9 @@ export default function HomePage() {
                   <span className="text-accent">People Actually Keep</span>
                 </h1>
                 <p className="mt-6 text-lg md:text-xl text-text-secondary leading-relaxed">
-                  Branded fidget keychains with satisfying mechanical switches. 
-                  Three pricing tiers to fit any budget, with minimums starting 
-                  at just 50 units. Made locally in Toronto.
+                  Branded fidget keychains with satisfying mechanical switches 
+                  and embedded NFC technology — included standard at every price point. 
+                  Three tiers to fit any budget, starting at just 50 units. Made in Toronto.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-4">
                   <Link href="/contact">
@@ -151,7 +160,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {features.map((feature) => (
               <Card key={feature.title} className="p-6 lg:p-8">
                 <div className="text-accent mb-4">{feature.icon}</div>
@@ -173,8 +182,8 @@ export default function HomePage() {
               Three Tiers to Fit Any Budget
             </h2>
             <p className="mt-4 text-text-secondary max-w-2xl mx-auto">
-              From simple branded shapes to fully custom mascot designs, 
-              we have options for every business size and budget.
+              From simple branded shapes to fully custom mascot designs — all with 
+              embedded NFC technology included at no extra cost.
             </p>
           </div>
 
@@ -216,8 +225,51 @@ export default function HomePage() {
         </Container>
       </SectionWrapper>
 
-      {/* About Teaser Section */}
+      {/* NFC Technology Section */}
       <SectionWrapper className="bg-surface/50">
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary">
+              Every Keychain is{' '}
+              <span className="text-accent">NFC-Enabled</span>
+            </h2>
+            <p className="mt-4 text-text-secondary max-w-2xl mx-auto">
+              Embedded NFC tags come standard with every unit at no additional cost. 
+              One tap connects your customers to any digital experience.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { title: 'Restaurants & Cafes', desc: 'Link directly to your digital menu, ordering page, or loyalty program.' },
+              { title: 'Events & Activations', desc: 'Photo booths, glam bots, and live events — tap to instantly receive photos and media.' },
+              { title: 'Artists & Musicians', desc: 'Route fans to Spotify, Apple Music, SoundCloud, or your latest release.' },
+              { title: 'Retail & Pet Shops', desc: 'Make rebooking easy — one tap to schedule appointments or reorder products.' },
+              { title: 'Sales & Trade Shows', desc: 'Hand out NFC keychains that link prospects to landing pages, demos, or contact forms.' },
+              { title: 'Secure & One-Time Write', desc: 'NFC tags can be encrypted after encoding so the link cannot be changed or tampered with.' },
+            ].map((item) => (
+              <div key={item.title} className="p-5 bg-background rounded-xl border border-border">
+                <h3 className="text-accent font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm text-text-secondary">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 p-6 bg-background rounded-xl border border-accent/30 text-center">
+            <p className="text-text-primary font-semibold text-lg">
+              Need on-site NFC encoding?
+            </p>
+            <p className="mt-2 text-text-secondary max-w-2xl mx-auto">
+              We provide portable NFC encoding stations for live events. Perfect for photo 
+              activations where each guest receives a keychain pre-loaded with their photos 
+              in real time.
+            </p>
+          </div>
+        </Container>
+      </SectionWrapper>
+
+      {/* About Teaser Section */}
+      <SectionWrapper>
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>

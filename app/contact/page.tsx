@@ -100,7 +100,7 @@ export default function ContactPage() {
               Let&apos;s <span className="text-accent">Build</span> Together
             </h1>
             <p className="text-lg md:text-xl text-text-secondary">
-              Ready to elevate your brand with custom products? Get in touch and
+              Ready to elevate your brand with NFC-enabled custom keychains? Get in touch and
               let&apos;s discuss your vision. We typically respond within 24 hours.
             </p>
           </motion.div>

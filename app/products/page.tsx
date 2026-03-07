@@ -6,7 +6,7 @@ import { Container, SectionWrapper, Button, Card } from '@/components/ui';
 export const metadata: Metadata = {
   title: 'Products | ArkForge Custom',
   description:
-    'Custom branded clicky keychains and fidget toys. Three pricing tiers to fit any budget. Low minimums starting at 50 units.',
+    'Custom branded clicky keychains with embedded NFC technology included at no extra cost. Three pricing tiers to fit any budget. Low minimums starting at 50 units.',
 };
 
 // Product tiers
@@ -22,6 +22,7 @@ const productTiers = [
       'Text or simple logo only',
       'Mechanical switch integrated',
       'Logo printed/engraved on flat surface',
+      'Embedded NFC tag included',
     ],
     products: [
       { name: 'Clicky Keychain', price: '$4.75/unit*' },
@@ -47,6 +48,7 @@ const productTiers = [
       'Premium finish options',
       'Custom shape options (wrench, house, tooth, coffee cup)',
       'Their logo IS the design',
+      'Embedded NFC tag included',
     ],
     products: [
       { name: 'Clicky Keychain', price: '$7.50/unit*' },
@@ -73,6 +75,7 @@ const productTiers = [
       'Complex design (your logo AS the shape)',
       'Multiple switches or fidget features',
       'Premium packaging option available',
+      'Embedded NFC tag included',
     ],
     products: [
       { name: 'Clicky Keychain', price: '$10.50/unit*' },
@@ -137,9 +140,11 @@ export default function ProductsPage() {
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
               Branded fidget keychains that people actually want to keep. 
+              Every unit includes an embedded NFC tag at no extra cost. 
               Three tiers to fit any budget, with minimums starting at just 50 units.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
+              <span className="px-4 py-2 bg-accent/10 text-accent rounded-full">NFC-Enabled Standard</span>
               <span className="px-4 py-2 bg-accent/10 text-accent rounded-full">Low Minimums</span>
               <span className="px-4 py-2 bg-accent/10 text-accent rounded-full">Local Toronto Production</span>
               <span className="px-4 py-2 bg-accent/10 text-accent rounded-full">Fast Turnaround</span>
@@ -288,11 +293,84 @@ export default function ProductsPage() {
 
           <div className="mt-8 text-center">
             <p className="text-text-secondary text-sm mb-4">
-              <strong className="text-text-primary">Our edge:</strong> Lower minimums + local Toronto production + faster turnaround than competitors
+              <strong className="text-text-primary">Our edge:</strong> NFC included at no extra cost + lower minimums + local Toronto production + faster turnaround than competitors
             </p>
             <Link href="/contact">
               <Button variant="primary">Get Custom Quote</Button>
             </Link>
+          </div>
+        </Container>
+      </SectionWrapper>
+
+      {/* NFC Technology Section */}
+      <SectionWrapper>
+        <Container>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary">
+              Built-In NFC Technology
+            </h2>
+            <p className="mt-4 text-text-secondary max-w-2xl mx-auto">
+              Every keychain — from Budget to Premium — ships with an embedded NFC tag 
+              at no additional charge. Turn a physical product into a digital touchpoint.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-accent mb-4">Use Cases</h3>
+              <ul className="space-y-3">
+                {[
+                  'Restaurants & Cafes — Link to digital menus, ordering, or loyalty programs',
+                  'Events & Trade Shows — Drive traffic to landing pages, demos, or sign-up forms',
+                  'Photo Activations — Glam bots & photo booths deliver pictures instantly via NFC tap',
+                  'Artists & Musicians — Route fans to Spotify, Apple Music, SoundCloud, or latest releases',
+                  'Pet Shops & Salons — One-tap appointment booking for return customers',
+                  'Retail — Link to product pages, reviews, or referral programs',
+                  'Real Estate — Connect prospects to virtual tours or open house listings',
+                  'Fitness & Wellness — Link to class schedules, membership portals, or booking pages',
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
+                    <span className="text-accent mt-0.5">\u2713</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-accent mb-4">NFC Advantages</h3>
+              <ul className="space-y-3">
+                {[
+                  'Works with all modern smartphones — no app required, just tap',
+                  'One-time write encryption available — link cannot be changed or tampered with once locked',
+                  'No battery or charging needed — passive NFC lasts a lifetime',
+                  'Turns a promotional item into a measurable digital touchpoint',
+                  'Instant engagement — no QR scanning, no typing URLs',
+                  'Portable NFC encoding stations available for live events',
+                  'Contactless and hygienic — perfect for food service and healthcare',
+                  'Eco-friendly — replaces printed materials like menus and brochures',
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
+                    <span className="text-accent mt-0.5">\u2713</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          <div className="mt-10 p-6 bg-surface rounded-xl border border-accent/30">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-text-primary mb-2">
+                On-Site NFC Encoding Stations
+              </h3>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Hosting an event with a glam bot or photo booth? We provide portable NFC encoding 
+                stations that let each guest tap their keychain to instantly receive their photos. 
+                The next group steps up, takes their pictures, and taps — everyone walks away with 
+                their memories loaded onto a custom-branded keepsake.
+              </p>
+            </div>
           </div>
         </Container>
       </SectionWrapper>

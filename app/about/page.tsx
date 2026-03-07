@@ -6,11 +6,20 @@ import { Container, SectionWrapper, Button, Card } from '@/components/ui';
 export const metadata: Metadata = {
   title: 'About | ArkForge Custom',
   description:
-    'Learn about ArkForge Custom - local, small-batch manufacturing for businesses. Advanced equipment, precision quality, Ontario-based.',
+    'Learn about ArkForge Custom - NFC-enabled custom keychains, local small-batch manufacturing for businesses. Advanced equipment, precision quality, Toronto-based.',
 };
 
 // Capabilities data
 const capabilities = [
+  {
+    title: 'NFC Technology',
+    description: 'Every keychain includes an embedded NFC tag at no extra cost — connecting physical products to digital experiences.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0" />
+      </svg>
+    ),
+  },
   {
     title: 'Multi-Color Production',
     description: 'Full-color capabilities for vibrant, eye-catching branded products.',
@@ -84,7 +93,9 @@ export default function AboutPage() {
                 ArkForge Custom is a boutique manufacturing studio specializing in 
                 custom branded products for businesses. We believe that promotional 
                 items should be more than just throwaway trinkets — they should be 
-                products people genuinely want to keep and use.
+                products people genuinely want to keep and use. That&apos;s why every 
+                keychain we produce comes with an embedded NFC tag at no additional 
+                cost — turning a tactile keepsake into a digital touchpoint.
               </p>
               <p className="mt-4 text-text-secondary leading-relaxed">
                 Based in Ontario, we use advanced manufacturing equipment to produce 
@@ -124,7 +135,8 @@ export default function AboutPage() {
               To help businesses make lasting impressions through thoughtfully 
               designed, precision-manufactured products that people actually want 
               to keep. We bridge the gap between mass-produced promotional items 
-              and truly custom, quality goods.
+              and truly custom, NFC-enabled goods that connect the physical and 
+              digital world.
             </p>
           </div>
         </Container>

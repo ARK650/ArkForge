@@ -79,7 +79,8 @@ export default function GalleryPage() {
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
               Browse examples of our clicky keychains across all three tiers. 
-              Each design is fully customizable with your branding.
+              Each design is fully customizable with your branding and comes 
+              with an embedded NFC tag included at no extra cost.
             </p>
           </div>
         </Container>
