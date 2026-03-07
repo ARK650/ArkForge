@@ -330,7 +330,7 @@ export default function ProductsPage() {
                   'Fitness & Wellness — Link to class schedules, membership portals, or booking pages',
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <span className="text-accent mt-0.5">\u2713</span>
+                    <span className="text-accent mt-0.5">✓</span>
                     {item}
                   </li>
                 ))}
@@ -351,7 +351,7 @@ export default function ProductsPage() {
                   'Eco-friendly — replaces printed materials like menus and brochures',
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <span className="text-accent mt-0.5">\u2713</span>
+                    <span className="text-accent mt-0.5">✓</span>
                     {item}
                   </li>
                 ))}
